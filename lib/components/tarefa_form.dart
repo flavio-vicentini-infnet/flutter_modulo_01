@@ -23,11 +23,37 @@ class _TarefaFormState extends State<TarefaForm> {
   @override
   initState() {
     super.initState();
+
     getLocation().then((location) => {
           setState(() {
             _localController.text = location;
           })
         });
+  }
+
+  void mostraInfoLocalidade() {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Local da Tarefa'),
+          content: const Text(
+            "Será inserido de forma automática pelo App a sua latitude e longitude atual sua. Entretanto você pode apagar essa informação e inserir o dado de seu agrado. Ex: Casa, Av. Goethe.",
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -57,6 +83,12 @@ class _TarefaFormState extends State<TarefaForm> {
               }
             },
             icon: const Icon(Icons.save),
+          ),
+          IconButton(
+            onPressed: () {
+              mostraInfoLocalidade();
+            },
+            icon: const Icon(Icons.help),
           )
         ],
       ),

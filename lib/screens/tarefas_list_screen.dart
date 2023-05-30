@@ -23,10 +23,30 @@ class TarefasListScreen extends StatelessWidget {
           )
         ],
       ),
-      body: ListView.builder(
-        itemCount: tarefasProvider.count,
-        itemBuilder: (context, index) => TarefaTile(tarefasProvider.tarefaById(index)),
-      ),
+      body: tarefasProvider.count > 0
+          ? ListView.builder(
+              itemCount: tarefasProvider.count,
+              itemBuilder: (context, index) =>
+                  TarefaTile(tarefasProvider.tarefaById(index)),
+            )
+          : const Center(
+              child: Card(
+                borderOnForeground: true,
+                elevation: 32,
+                color: Colors.blueGrey,
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    "NÃO HÁ TAREFAS CADASTRADAS",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+              ),
+            ),
     );
   }
 }
