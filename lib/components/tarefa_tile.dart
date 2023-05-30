@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../provider/tarefas_provider.dart';
 
 class TarefaTile extends StatelessWidget {
-  const TarefaTile(this.tarefa);
+  const TarefaTile(this.tarefa, {super.key});
 
   final Tarefa tarefa;
 
@@ -26,24 +26,24 @@ class TarefaTile extends StatelessWidget {
               );
             },
             color: Colors.teal,
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
           ),
-          title: Text('${tarefa.nome}'),
+          title: Text(tarefa.nome),
           subtitle: Text("${tarefa.dia} ${tarefa.hora} - ${tarefa.local}"),
           trailing: IconButton(
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('Excluir Tarefa'),
-                  content: Text('Tem certeza?'),
+                  title: const Text('Excluir Tarefa'),
+                  content: const Text('Tem certeza?'),
                   actions: <Widget>[
                     TextButton(
-                      child: Text('Sim'),
+                      child: const Text('Sim'),
                       onPressed: () => Navigator.of(context).pop(true),
                     ),
                     TextButton(
-                      child: Text('Não'),
+                      child: const Text('Não'),
                       onPressed: () => Navigator.of(context).pop(false),
                     )
                   ],
@@ -55,7 +55,7 @@ class TarefaTile extends StatelessWidget {
               });
             },
             color: Colors.red,
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
           ),
         ),
       ),

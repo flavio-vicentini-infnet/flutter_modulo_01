@@ -28,9 +28,8 @@ class TarefasProvider with ChangeNotifier {
     // inserindo nova tarefa caso ela não exista com ID informado
     _items.putIfAbsent(
       id,
-          () =>
-          Tarefa(id, novaTarefa.nome, novaTarefa.dia, novaTarefa.hora,
-              novaTarefa.local),
+      () => Tarefa(id, novaTarefa.nome, novaTarefa.dia, novaTarefa.hora,
+          novaTarefa.local),
     );
 
     notifyListeners();
@@ -42,15 +41,12 @@ class TarefasProvider with ChangeNotifier {
     }
 
     if (novaTarefa.id != null &&
-        novaTarefa.id
-            .trim()
-            .isNotEmpty &&
+        novaTarefa.id.trim().isNotEmpty &&
         _items.containsKey(novaTarefa.id)) {
       _items.update(
           novaTarefa.id,
-              (value) =>
-              Tarefa(novaTarefa.id, novaTarefa.nome, novaTarefa.dia,
-                  novaTarefa.hora, novaTarefa.local));
+          (value) => Tarefa(novaTarefa.id, novaTarefa.nome, novaTarefa.dia,
+              novaTarefa.hora, novaTarefa.local));
     }
 
     notifyListeners();
@@ -60,6 +56,7 @@ class TarefasProvider with ChangeNotifier {
     if (tarefa != null && tarefa.id != null) {
       _items.remove(tarefa.id);
     }
+
     notifyListeners();
   }
 }

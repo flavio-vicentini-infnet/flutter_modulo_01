@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import '../models/tarefa.dart';
 
 class TarefaForm extends StatefulWidget {
+  const TarefaForm({super.key});
+
   @override
   State<TarefaForm> createState() => _TarefaFormState();
 }
@@ -32,7 +34,7 @@ class _TarefaFormState extends State<TarefaForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nova Tarefa'),
+        title: const Text('Nova Tarefa'),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -54,19 +56,19 @@ class _TarefaFormState extends State<TarefaForm> {
                 Navigator.of(context).pop();
               }
             },
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
           )
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Form(
           key: _form,
           child: Column(
-            children: [
+            children: <Widget>[
               TextFormField(
                 controller: _nomeController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Nome da Tarefa',
                   icon: Icon(Icons.work),
                 ),
@@ -88,14 +90,13 @@ class _TarefaFormState extends State<TarefaForm> {
 
                   if (dataUsuario != null) {
                     setState(() {
-                      // _diaController.text = "${dataUsuario.day}/${dataUsuario.month}/${dataUsuario.year}";
                       _diaController.text =
                           DateFormat('dd/MM/yyyy').format(dataUsuario);
                     });
                   }
                 },
                 controller: _diaController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Dia',
                   icon: Icon(Icons.calendar_month_outlined),
                 ),
@@ -122,7 +123,7 @@ class _TarefaFormState extends State<TarefaForm> {
                   }
                 },
                 controller: _horaController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Horário',
                   icon: Icon(Icons.alarm),
                 ),
@@ -135,7 +136,7 @@ class _TarefaFormState extends State<TarefaForm> {
               ),
               TextFormField(
                 controller: _localController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Local',
                   icon: Icon(Icons.location_on),
                 ),

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TarefasListScreen extends StatelessWidget {
+  const TarefasListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final TarefasProvider tarefasProvider = Provider.of(context);

@@ -1,45 +1,41 @@
 import 'package:agendador_tarefas_app/provider/tarefas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 import '../models/tarefa.dart';
 
 class EditaTarefaForm extends StatefulWidget {
+  const EditaTarefaForm({super.key});
+
   @override
   State<EditaTarefaForm> createState() => _EditaTarefaFormState();
 }
 
 class _EditaTarefaFormState extends State<EditaTarefaForm> {
   final _form = GlobalKey<FormState>();
-  final _nomeController = TextEditingController();
-  final _diaController = TextEditingController();
-  final _horaController = TextEditingController();
-  final _localController = TextEditingController();
 
-  @override
-  initState() {
-    super.initState();
-    getLocation().then((location) => {
-      setState(() {
-        _localController.text = location;
-      })
-    });
+  var nomeController = TextEditingController();
+  var diaController = TextEditingController();
+  var horaController = TextEditingController();
+  var localController = TextEditingController();
+
+  void carregaValores(Tarefa tarefaCarregada) {
+    nomeController.text = tarefaCarregada.nome;
+    diaController.text = tarefaCarregada.dia;
+    horaController.text = tarefaCarregada.hora;
+    localController.text = tarefaCarregada.local;
   }
 
   @override
   Widget build(BuildContext context) {
     final tarefa = ModalRoute.of(context)?.settings.arguments as Tarefa;
 
-    _nomeController.text = tarefa.nome;
-    _diaController.text = tarefa.dia;
-    _horaController.text = tarefa.hora;
-    _localController.text = tarefa.local;
+    carregaValores(tarefa);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editando Tarefa'),
+        title: const Text('Editando Tarefa'),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -48,10 +44,10 @@ class _EditaTarefaFormState extends State<EditaTarefaForm> {
 
                 Tarefa novaTarefa = Tarefa(
                   tarefa.id,
-                  _nomeController.text,
-                  _diaController.text,
-                  _horaController.text,
-                  _localController.text,
+                  nomeController.text,
+                  diaController.text,
+                  horaController.text,
+                  localController.text,
                 );
 
                 Provider.of<TarefasProvider>(context, listen: false)
@@ -60,19 +56,19 @@ class _EditaTarefaFormState extends State<EditaTarefaForm> {
                 Navigator.of(context).pop();
               }
             },
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
           )
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Form(
           key: _form,
           child: Column(
-            children: [
+            children: <Widget>[
               TextFormField(
-                controller: _nomeController,
-                decoration: InputDecoration(
+                controller: nomeController,
+                decoration: const InputDecoration(
                   labelText: 'Nome da Tarefa',
                   icon: Icon(Icons.work),
                 ),
@@ -93,13 +89,13 @@ class _EditaTarefaFormState extends State<EditaTarefaForm> {
                   );
 
                   if (dataUsuario != null) {
-                    setState(() {
-                      _diaController.text =
-                          DateFormat('dd/MM/yyyy').format(dataUsuario);
+                    setState(() async {
+                      diaController.text =
+                          await DateFormat('dd/MM/yyyy').format(dataUsuario);
                     });
                   }
                 },
-                controller: _diaController,
+                controller: diaController,
                 decoration: const InputDecoration(
                   labelText: 'Dia',
                   icon: Icon(Icons.calendar_month_outlined),
@@ -119,15 +115,15 @@ class _EditaTarefaFormState extends State<EditaTarefaForm> {
                   );
 
                   if (horaUsuario != null) {
-                    setState(() {
-                      _horaController.text =
-                      "${horaUsuario.hour.toString().padLeft(2, '0')}:"
-                          "${horaUsuario.minute.toString().padLeft(2, '0')}";
+                    setState(() async {
+                      horaController.text =
+                          await "${horaUsuario.hour.toString().padLeft(2, '0')}:"
+                              "${horaUsuario.minute.toString().padLeft(2, '0')}";
                     });
                   }
                 },
-                controller: _horaController,
-                decoration: InputDecoration(
+                controller: horaController,
+                decoration: const InputDecoration(
                   labelText: 'Horário',
                   icon: Icon(Icons.alarm),
                 ),
@@ -139,8 +135,8 @@ class _EditaTarefaFormState extends State<EditaTarefaForm> {
                 },
               ),
               TextFormField(
-                controller: _localController,
-                decoration: InputDecoration(
+                controller: localController,
+                decoration: const InputDecoration(
                   labelText: 'Local',
                   icon: Icon(Icons.location_on),
                 ),
@@ -157,32 +153,4 @@ class _EditaTarefaFormState extends State<EditaTarefaForm> {
       ),
     );
   }
-
-  Future<String> getLocation() async {
-    Location location = Location();
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        Future.value("");
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        Future.value("");
-      }
-    }
-
-    _locationData = await location.getLocation();
-
-    return "${_locationData.latitude} : ${_locationData.longitude}";
-  }
 }
-

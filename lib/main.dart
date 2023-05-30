@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         routes: {
-          AppRoutes.HOME: (_) => TarefasListScreen(),
-          AppRoutes.TAREFA_FORM: (_) => TarefaForm(),
-          AppRoutes.EDITA_TAREFA_FORM: (_) => EditaTarefaForm(),
+          AppRoutes.HOME: (_) => const TarefasListScreen(),
+          AppRoutes.TAREFA_FORM: (_) => const TarefaForm(),
+          AppRoutes.EDITA_TAREFA_FORM: (_) => const EditaTarefaForm(),
         },
       ),
     );

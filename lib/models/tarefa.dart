@@ -1,5 +1,3 @@
-import 'dart:math';
-
 class Tarefa {
   static int idController = 3;
 
@@ -11,10 +9,14 @@ class Tarefa {
 
   const Tarefa(this.id, this.nome, this.dia, this.hora, this.local);
 
-  Tarefa.semId({required this.nome, required this.dia, required this.hora, required this.local})
+  Tarefa.semId(
+      {required this.nome,
+      required this.dia,
+      required this.hora,
+      required this.local})
       : this.id = idController.toString();
 
-  static void incrementId(){
+  static void incrementId() {
     idController++;
   }
 
